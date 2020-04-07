@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:githubrepo/core/model/githup_repo.dart';
 
 import 'core/data_provider/github_api.dart';
+import 'core/repository/githup_repo_repository.dart';
 
 void main() => runApp(MyApp());
 
@@ -50,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(
         child: FutureBuilder(
-          future: GithubRepoApi().getGithubRepo(),
+          future: GithubRepoRepository().getGithubRepo(),
           builder:
               (BuildContext context, AsyncSnapshot<List<GithubRepo>> snapshot) {
             if (!snapshot.hasData) {
@@ -61,17 +62,22 @@ class _MyHomePageState extends State<MyHomePage> {
             }
             final githubreps = snapshot.data;
             return ListView.builder(
+              itemCount: githubreps.length,
               itemBuilder: (BuildContext context, int index) {
                 final githubrep = githubreps[index];
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text("${githubrep.full_name}"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(" Repo owner id ${githubrep.full_name}"),
-                  ],
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text("${githubrep.full_name}"),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(" Repo owner id ${githubrep.full_name}"),
+                    ],
+                  ),
                 );
               },
             );

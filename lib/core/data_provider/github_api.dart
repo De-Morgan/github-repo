@@ -3,17 +3,17 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:githubrepo/core/model/githup_repo.dart';
 
-class GithubRepoApi implements Api {
+class GithubRepoApiNetwork implements GitHubRepoApi {
   final dio = Dio();
 
   final String BASEURL = "https://api.github.com/search/repositories";
 
-  static GithubRepoApi _instance = GithubRepoApi._internal();
+  static GithubRepoApiNetwork _instance = GithubRepoApiNetwork._internal();
 
-  factory GithubRepoApi() {
+  factory GithubRepoApiNetwork() {
     return _instance;
   }
-  GithubRepoApi._internal();
+  GithubRepoApiNetwork._internal();
 
   @override
   Future<List<GithubRepo>> getGithubRepo() async {
@@ -24,10 +24,12 @@ class GithubRepoApi implements Api {
         "per_page": 10
       });
       if (response.statusCode == 200) {
+        print("${response.data.runtimeType}");
         print("${response.data}");
-        Map<String, dynamic> rawJson = json.decode(response.data);
+        // Map<String, dynamic> rawJson = json.decode(response.data);
+        Map<String, dynamic> rawJson = response.data;
         List<dynamic> result = rawJson["items"];
-        return result.map((data) => GithubRepo.fromJson(data));
+        return result.map((data) => GithubRepo.fromJson(data)).toList();
       } else {
         throw Exception("Error Ocurred");
       }
@@ -37,6 +39,6 @@ class GithubRepoApi implements Api {
   }
 }
 
-abstract class Api {
+abstract class GitHubRepoApi {
   Future<List<GithubRepo>> getGithubRepo();
 }

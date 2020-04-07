@@ -1,3 +1,4 @@
+// Only care about the full_name  and id
 class GithubRepo {
   final String full_name;
   final int ownerId;
