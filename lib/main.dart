@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Repos',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Repos'),
     );
   }
 }
@@ -66,12 +66,17 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (BuildContext context, int index) {
                 final githubrep = githubreps[index];
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Text("${githubrep.full_name}"),
+                      Text(
+                        "${githubrep.full_name}",
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
                       SizedBox(
                         height: 10,
                       ),
